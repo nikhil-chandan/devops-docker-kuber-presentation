@@ -1,0 +1,24 @@
+version: "3"
+services:
+  auth:
+    build: ./auth-api
+    ports:
+      - '8000:3000'
+    environment:
+      TOKEN_KEY: 'shouldbeverysecure'
+  users:
+    build: ./users-api
+    ports:
+      - '8080:3000'
+    environment:
+      # Replace the missing password and dbname in a real deployment
+      MONGODB_CONNECTION_URI: 'mongodb+srv://nikhil:nikhil@cluster0.n6xcl.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+      AUTH_API_ADDRESS: 'auth:3000'
+  tasks:
+    build: ./tasks-api
+    ports:
+      - '3000:3000'
+    environment:
+      # Replace the missing password and dbname in a real deployment
+      MONGODB_CONNECTION_URI: 'mongodb+srv://nikhil:nikhil@cluster0.n6xcl.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+      AUTH_API_ADDRESS: 'auth:3000'
